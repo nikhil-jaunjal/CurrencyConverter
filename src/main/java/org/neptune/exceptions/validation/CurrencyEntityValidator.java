@@ -1,26 +1,25 @@
-package org.neptune.exceptions.handlers;
+package org.neptune.exceptions.validation;
 
 import org.neptune.exceptions.InvalidAmountException;
 import org.neptune.exceptions.InvalidCodeException;
 import org.neptune.exceptions.InvalidCurrencyIdException;
 import org.neptune.exceptions.InvalidRateException;
-import org.neptune.model.Currency;
+import org.neptune.model.CurrencyEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class CurrencyExceptionValidator
+public class CurrencyEntityValidator
 {
-
 	@ExceptionHandler(Exception.class)
-	public boolean validateCurrencyForPost(Currency currency)
+	public boolean validateCurrencyForPost(CurrencyEntity currency)
 	{
 		checkCodeLength(currency.getCode());
 		checkRate(currency.getRate());
 		return true;
 	}
 
-	public boolean validateCurrencyForPut(Currency currency)
+	public boolean validateCurrencyForPut(CurrencyEntity currency)
 	{
 		checkCurrencyId(currency.getCurrencyId());
 		checkCodeLength(currency.getCode());

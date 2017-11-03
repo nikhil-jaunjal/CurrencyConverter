@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.neptune.exceptions.InvalidCodeException;
 import org.neptune.exceptions.InvalidCurrencyIdException;
-import org.neptune.exceptions.handlers.CurrencyExceptionValidator;
-import org.neptune.model.Currency;
+import org.neptune.exceptions.validation.CurrencyEntityValidator;
+import org.neptune.model.CurrencyEntity;
 import org.neptune.repo.CurrencyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,22 +16,22 @@ public class CurrencyService
 	@Autowired
 	private CurrencyRepository currencyRepository;
 
-	CurrencyExceptionValidator validator = new CurrencyExceptionValidator();
+	CurrencyEntityValidator validator = new CurrencyEntityValidator();
 
 	public List<?> findAll()
 	{
 		return (List<?>) currencyRepository.findAll();
 	}
 
-	public Currency save(Currency currency)
+	public CurrencyEntity save(CurrencyEntity currency)
 	{
 		validator.validateCurrencyForPost(currency);
 		return currencyRepository.save(currency);
 	}
 
-	public Currency findByCode(String code)
+	public CurrencyEntity findByCode(String code)
 	{
-		Currency outObject = currencyRepository.findByCode(code);
+		CurrencyEntity outObject = currencyRepository.findByCode(code);
 		if (outObject == null)
 		{
 			throw new InvalidCodeException();
@@ -39,12 +39,12 @@ public class CurrencyService
 		return outObject;
 	}
 
-	public Currency findById(Integer id)
+	public CurrencyEntity findById(Integer id)
 	{
 		return currencyRepository.findOne(id);
 	}
 
-	public Currency putCurrency(Currency currency)
+	public CurrencyEntity putCurrency(CurrencyEntity currency)
 	{
 		validator.validateCurrencyForPut(currency);
 		if (findById(currency.getCurrencyId()) == null)
@@ -64,7 +64,7 @@ public class CurrencyService
 	{
 		validator.checkCodeLength(code);
 		validator.checkAmount(amount);
-		Currency outObject = currencyRepository.findByCode(code);
+		CurrencyEntity outObject = currencyRepository.findByCode(code);
 		return outObject.getRate() * amount;
 	}
 }

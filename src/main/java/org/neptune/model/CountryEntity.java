@@ -8,22 +8,26 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
-public class Country
+@Table(name = "country")
+public class CountryEntity
 {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "country_id")
 	private Integer countryId;
+
 	private String name;
+
 	private String capital;
 
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "ref_currency_id", referencedColumnName = "currency_id")
-	private Currency currency;
+	@JoinColumn(name = "ref_currency_id")
+	private CurrencyEntity currency;
 
-	public Country()
+	public CountryEntity()
 	{
 
 	}
@@ -58,12 +62,12 @@ public class Country
 		this.capital = capital;
 	}
 
-	public Currency getCurrency()
+	public CurrencyEntity getCurrency()
 	{
 		return currency;
 	}
 
-	public void setCurrency(Currency currency)
+	public void setCurrency(CurrencyEntity currency)
 	{
 		this.currency = currency;
 	}

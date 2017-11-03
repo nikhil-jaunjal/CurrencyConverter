@@ -3,9 +3,10 @@ package org.neptune.Services;
 import java.util.List;
 
 import org.neptune.dto.CountryDTO;
-import org.neptune.exceptions.handlers.CountryExceptionValidator;
-import org.neptune.model.Country;
+import org.neptune.model.CountryEntity;
 import org.neptune.repo.CountryRepository;
+import org.neptune.repo.CurrencyRepository;
+import org.neptune.validation.CountryDTOValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,22 +16,33 @@ public class CountryService
 	@Autowired
 	private CountryRepository countryRepository;
 
-	CountryExceptionValidator exceptionHandler = new CountryExceptionValidator();
+	@Autowired
+	private CurrencyRepository currencyRepository;
+	
+	@Autowired
+	private CountryDTOValidator countryDtoValidator;
 
-	public Country saveCountry(CountryDTO countryDto)
+	public CountryEntity saveCountry(CountryDTO countryDTO)
 	{
-		if (exceptionHandler.validateCountryDTO(countryDto))
-		{
-			Country inCountry = exceptionHandler.setCountryDTO(countryDto);
-			return countryRepository.save(inCountry);
-		}
-		return null;
+		countryDtoValidator.validateDto(countryDTO);
+		CountryEntity countryEntity = createCountryEntity(countryDTO);
+		return countryRepository.save(countryEntity);
 	}
 
-	public List<Country> findAllCountries()
+	public List<CountryEntity> findAllCountries()
 	{
-		return (List<Country>) countryRepository.findAll();
+		return (List<CountryEntity>) countryRepository.findAll();
 
 	}
 
+	private CountryEntity createCountryEntity(CountryDTO countryDTO)
+	{
+		CountryEntity countryEntity = new CountryEntity();
+		countryEntity.setCapital(countryDTO.getCapital());
+		countryEntity.setCountryId(countryDTO.getCountryId());
+		countryEntity.setCurrency(currencyRepository.findOne(countryDTO.getCurrencyId()));
+		countryEntity.setName(countryDTO.getName());
+
+		return countryEntity;
+	}
 }

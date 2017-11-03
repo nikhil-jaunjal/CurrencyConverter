@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.neptune.Services.CountryService;
 import org.neptune.dto.CountryDTO;
-import org.neptune.model.Country;
+import org.neptune.model.CountryEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,15 +20,15 @@ public class CountryController
 	private CountryService countryService;
 
 	@PostMapping("/countries")
-	public Country saveCountry(@RequestBody CountryDTO countryDto)
+	public CountryEntity saveCountry(@RequestBody CountryDTO countryDto)
 	{
 		return countryService.saveCountry(countryDto);
 	}
 
 	@GetMapping("/countries")
-	public List<Country> findAllCountries()
+	public List<CountryEntity> findAllCountries()
 	{
-		return (List<Country>) countryService.findAllCountries();
+		return (List<CountryEntity>) countryService.findAllCountries();
 
 	}
 }

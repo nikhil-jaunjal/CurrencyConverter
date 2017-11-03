@@ -1,13 +1,11 @@
 package org.neptune.repo;
 
-import org.neptune.model.Country;
+import org.neptune.model.CountryEntity;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
-@Service
-public interface CountryRepository extends CrudRepository<Country, Integer>
+@Repository
+public interface CountryRepository extends CrudRepository<CountryEntity, Integer>
 {
-
-	// CountryDTO save(CountryDTO country);
 
 }

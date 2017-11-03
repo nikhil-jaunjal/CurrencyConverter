@@ -1,13 +1,11 @@
 package org.neptune.repo;
 
-import org.neptune.model.Currency;
+import org.neptune.model.CurrencyEntity;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
-@Service
-public interface CurrencyRepository extends CrudRepository<Currency, Integer>
+@Repository
+public interface CurrencyRepository extends CrudRepository<CurrencyEntity, Integer>
 {
-	Currency findByCode(String code);
-
-	Currency findByCurrencyId(Integer currencyId);
+	CurrencyEntity findByCode(String code);
 }

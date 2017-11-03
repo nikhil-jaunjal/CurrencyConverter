@@ -3,7 +3,7 @@ package org.neptune.controller;
 import java.util.List;
 
 import org.neptune.Services.CurrencyService;
-import org.neptune.model.Currency;
+import org.neptune.model.CurrencyEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,20 +28,20 @@ public class CurrencyController
 	}
 
 	@GetMapping(value = "/{code}")
-	public Currency findByCode(@PathVariable String code)
+	public CurrencyEntity findByCode(@PathVariable String code)
 	{
 		return currencyService.findByCode(code);
 	}
 
 	@PostMapping()
-	public Currency save(@RequestBody Currency currency)
+	public CurrencyEntity save(@RequestBody CurrencyEntity currency)
 	{
 		currencyService.save(currency);
 		return currency;
 	}
 
 	@PutMapping()
-	public Currency putCurrency(@RequestBody Currency currency)
+	public CurrencyEntity putCurrency(@RequestBody CurrencyEntity currency)
 	{
 		return currencyService.putCurrency(currency);
 	}

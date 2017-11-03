@@ -5,22 +5,19 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-public class Currency
+@Table(name = "currency")
+public class CurrencyEntity
 {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "currency_id")
 	private Integer currencyId;
+
 	@Column(unique = true)
 	private String code;
-	private Double rate;
-
-	public Currency()
-	{
-
-	}
 
 	public Integer getCurrencyId()
 	{
@@ -52,4 +49,10 @@ public class Currency
 		this.rate = rate;
 	}
 
+	private Double rate;
+
+	public CurrencyEntity()
+	{
+
+	}
 }
