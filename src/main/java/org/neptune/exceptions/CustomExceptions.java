@@ -1,10 +1,10 @@
 package org.neptune.exceptions;
 
-public class Exceptions extends RuntimeException
+public class CustomExceptions extends RuntimeException
 {
 	private static final long serialVersionUID = 2277782581543940086L;
 
-	public Exceptions()
+	public CustomExceptions()
 	{
 		super();
 	}
