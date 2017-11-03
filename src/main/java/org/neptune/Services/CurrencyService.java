@@ -2,6 +2,8 @@ package org.neptune.Services;
 
 import java.util.List;
 
+import org.neptune.exceptions.InvalidCodeException;
+import org.neptune.exceptions.InvalidCurrencyIdException;
 import org.neptune.exceptions.handlers.CurrencyExceptionValidator;
 import org.neptune.model.Currency;
 import org.neptune.repo.CurrencyRepository;
@@ -23,8 +25,18 @@ public class CurrencyService
 
 	public Currency save(Currency currency)
 	{
-		validator.validateCurrency(currency);
+		validator.validateCurrencyForPost(currency);
 		return currencyRepository.save(currency);
+	}
+
+	public Currency findByCode(String code)
+	{
+		Currency outObject = currencyRepository.findByCode(code);
+		if (outObject == null)
+		{
+			throw new InvalidCodeException();
+		}
+		return outObject;
 	}
 
 	public Currency findById(Integer id)
@@ -32,9 +44,15 @@ public class CurrencyService
 		return currencyRepository.findOne(id);
 	}
 
-	public Currency putCurrency(Currency currency, Integer id)
+	public Currency putCurrency(Currency currency)
 	{
+		validator.validateCurrencyForPut(currency);
+		if (findById(currency.getCurrencyId()) == null)
+		{
+			throw new InvalidCurrencyIdException();
+		}
 		return currencyRepository.save(currency);
+
 	}
 
 	public void deleteCurrency(Integer id)
@@ -44,6 +62,8 @@ public class CurrencyService
 
 	public Double convertCurrency(String code, Double amount)
 	{
+		validator.checkCodeLength(code);
+		validator.checkAmount(amount);
 		Currency outObject = currencyRepository.findByCode(code);
 		return outObject.getRate() * amount;
 	}

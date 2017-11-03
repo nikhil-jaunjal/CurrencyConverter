@@ -13,6 +13,7 @@ public class Currency
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "currency_id")
 	private Integer currencyId;
+	@Column(unique = true)
 	private String code;
 	private Double rate;
 

@@ -28,10 +28,10 @@ public class CurrencyController
 		return (List<?>) currencyService.findAll();
 	}
 
-	@GetMapping(value = "/{country}")
-	public Currency findById(@PathVariable Integer id)
+	@GetMapping(value = "/{code}")
+	public Currency findByCode(@PathVariable String code)
 	{
-		return currencyService.findById(id);
+		return currencyService.findByCode(code);
 	}
 
 	// post
@@ -43,10 +43,10 @@ public class CurrencyController
 	}
 
 	// update
-	@PutMapping(value = "/{id}")
-	public Currency putCurrency(@RequestBody Currency currency, @PathVariable Integer id)
+	@PutMapping()
+	public Currency putCurrency(@RequestBody Currency currency)
 	{
-		return currencyService.putCurrency(currency, id);
+		return currencyService.putCurrency(currency);
 	}
 
 	// delete
@@ -58,6 +58,7 @@ public class CurrencyController
 	}
 
 	// convert currency
+	// after UI, uri will change to /{amount}/{code}
 	@GetMapping(value = "/INR/{amount}/into/{code}")
 	public String convertCurrency(@PathVariable String code, @PathVariable Double amount)
 	{
