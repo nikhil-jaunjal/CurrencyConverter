@@ -21,7 +21,6 @@ public class CurrencyController
 	@Autowired
 	private CurrencyService currencyService;
 
-	// get
 	@GetMapping()
 	public List<?> findAll()
 	{
@@ -34,7 +33,6 @@ public class CurrencyController
 		return currencyService.findByCode(code);
 	}
 
-	// post
 	@PostMapping()
 	public Currency save(@RequestBody Currency currency)
 	{
@@ -42,14 +40,12 @@ public class CurrencyController
 		return currency;
 	}
 
-	// update
 	@PutMapping()
 	public Currency putCurrency(@RequestBody Currency currency)
 	{
 		return currencyService.putCurrency(currency);
 	}
 
-	// delete
 	@DeleteMapping(value = "/{id}")
 	public String deleteCurrency(@PathVariable Integer id)
 	{
