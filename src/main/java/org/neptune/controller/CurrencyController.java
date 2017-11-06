@@ -5,6 +5,7 @@ import java.util.List;
 import org.neptune.Services.CurrencyService;
 import org.neptune.model.CurrencyEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -60,6 +61,14 @@ public class CurrencyController
 	{
 		Double convertedAmount = currencyService.convertCurrency(code, amount);
 		return amount + " INR = " + convertedAmount + " " + code;
+	}
+
+	// Pagination
+	@GetMapping(value = "/page/{number}")
+	public Page<CurrencyEntity> getAllPageByPage(@PathVariable Integer number)
+	{
+		return currencyService.getAllPageByPage(number);
+
 	}
 
 }

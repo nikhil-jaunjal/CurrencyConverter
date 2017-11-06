@@ -8,6 +8,9 @@ import org.neptune.exceptions.validation.CurrencyEntityValidator;
 import org.neptune.model.CurrencyEntity;
 import org.neptune.repo.CurrencyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,7 +19,8 @@ public class CurrencyService
 	@Autowired
 	private CurrencyRepository currencyRepository;
 
-	CurrencyEntityValidator validator = new CurrencyEntityValidator();
+	@Autowired
+	private CurrencyEntityValidator validator;
 
 	public List<?> findAll()
 	{
@@ -67,4 +71,12 @@ public class CurrencyService
 		CurrencyEntity outObject = currencyRepository.findByCode(code);
 		return outObject.getRate() * amount;
 	}
+
+	// pagination
+	public Page<CurrencyEntity> getAllPageByPage(Integer pageNumber)
+	{
+		PageRequest request = new PageRequest(pageNumber - 1, 5, Sort.Direction.ASC, "currencyId");
+		return currencyRepository.findAll(request);
+	}
+
 }
